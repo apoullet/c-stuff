@@ -7,7 +7,7 @@ typedef enum {
 } direction;
 
 typedef struct {
-    int body[10][2];
+    int body[600][2];
     int limb_count;
     int growing;
     direction move;

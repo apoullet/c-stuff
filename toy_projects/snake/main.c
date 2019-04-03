@@ -30,16 +30,20 @@ int main() {
     goal.x = 1 + rand() % 28;
     goal.y = 1 + rand() % 18;
 
+    int score = 0;
+
     do {
 	clear();
 
 	draw_arena(30, 20);
+	mvprintw(1, 32, "SCORE: %d", score);
 	move_snake(&player);
 	draw_snake(&player);
 	
 	if (player.body[player.limb_count-1][1] == goal.x && player.body[player.limb_count-1][0] == goal.y) {
 	    grow_snake(&player);
 	    move_cherry(&goal);
+	    score++;
 	}
 
 	draw_cherry(&goal);
@@ -61,7 +65,7 @@ int main() {
 		player.move = LEFT;
 		break;
 	}
-    } while (ch != 'q' && player.limb_count < 10);
+    } while (ch != 'q' && player.limb_count < 600);
 
     endwin();
 
