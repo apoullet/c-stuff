@@ -23,5 +23,6 @@ void draw_snake(snake * player);
 void move_snake(snake * player);
 void grow_snake(snake * player);
 void hit_wall(snake * player, int * arena);
+int collision(snake * player);
 void draw_cherry(cherry * goal);
 void move_cherry(cherry * goal);

@@ -68,7 +68,7 @@ int main() {
 		player.move = LEFT;
 		break;
 	}
-    } while (ch != 'q' && player.limb_count < 600);
+    } while (ch != 'q' && player.limb_count < 600 && !collision(&player));
 
     endwin();
 

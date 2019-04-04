@@ -65,6 +65,15 @@ void hit_wall(snake * player, int * arena) {
     }
 }
 
+int collision(snake * player) {
+    int * head = player->body[player->limb_count-1];
+
+    for (int i = 0; i < player->limb_count-1; i++)
+	if (head[0] == player->body[i][0] && head[1] == player->body[i][1]) return 1;
+
+    return 0;
+}
+
 void move_cherry(cherry * goal) {
     srand(time(NULL));
 
