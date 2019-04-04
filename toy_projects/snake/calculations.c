@@ -50,6 +50,21 @@ void grow_snake(snake * player) {
     player->growing = 1;
 }
 
+void hit_wall(snake * player, int * arena) {
+    int width = arena[0], height = arena[1];
+
+    for (int i = 0; i < player->limb_count; i++) {
+	if (player->body[i][0] < 1)
+	    player->body[i][0] = width-2;
+	if (player->body[i][0] > width-2)
+	    player->body[i][0] = 1;
+	if (player->body[i][1] < 1)
+	    player->body[i][1] = height-2;
+	if (player->body[i][1] > height-2)
+	    player->body[i][1] = 1;
+    }
+}
+
 void move_cherry(cherry * goal) {
     srand(time(NULL));
 

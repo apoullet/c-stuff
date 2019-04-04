@@ -14,6 +14,8 @@ int main() {
     curs_set(0);
     timeout(100);
 
+    int arena[2] = { 20, 30 };
+
     snake player;
 
     player.body[0][0] = 10; 
@@ -35,10 +37,11 @@ int main() {
     do {
 	clear();
 
-	draw_arena(30, 20);
+	draw_arena(arena[1], arena[0]);
 	mvprintw(1, 32, "SCORE: %d", score);
 	move_snake(&player);
 	draw_snake(&player);
+	hit_wall(&player, arena);
 	
 	if (player.body[player.limb_count-1][1] == goal.x && player.body[player.limb_count-1][0] == goal.y) {
 	    grow_snake(&player);
