@@ -34,23 +34,6 @@ int main() {
     int score = 0;
 
     do {
-	clear();
-
-	draw_arena(arena);
-	mvprintw(arena.pos.y+2, arena.pos.x+arena.width+1, "SCORE: %d", score);
-	move_snake(&player);
-	draw_snake(player);
-	hit_wall(&player, arena);
-	
-	if (player.body[player.limb_count-1].y == goal.y && player.body[player.limb_count-1].x == goal.x) {
-	    player.growing = 1;
-	    move_cherry(&goal, arena);
-	    score++;
-	}
-
-	draw_cherry(goal);
-	refresh();
-
 	ch = getch();
 
 	switch (ch) {
@@ -67,6 +50,24 @@ int main() {
 		player.move = LEFT;
 		break;
 	}
+
+	clear();
+
+	move_snake(&player);
+	hit_wall(&player, arena);
+
+	if (player.body[player.limb_count-1].y == goal.y && player.body[player.limb_count-1].x == goal.x) {
+	    player.growing = 1;
+	    move_cherry(&goal, arena);
+	    score++;
+	}
+
+	mvprintw(arena.pos.y+2, arena.pos.x+arena.width+1, "SCORE: %d", score);
+	draw_arena(arena);
+	draw_snake(player);
+	draw_cherry(goal);
+
+	refresh();
     } while (ch != 'q' && player.limb_count < space && !collision(player));
 
     endwin();
