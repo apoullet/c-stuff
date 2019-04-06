@@ -2,12 +2,16 @@
 #include <stdlib.h>
 #include <time.h>
 
-void init_snake(snake * player, int x, int y) {
-    player->body[0][0] = x;
-    player->body[0][1] = y;
+snake * init_snake(snake * player, rect arena) {
+    player = malloc(sizeof(*player));
+
+    player->body[0][0] = arena.pos.x+arena.width;
+    player->body[0][1] = arena.pos.y+arena.height;
     player->limb_count = 1;
     player->growing    = 0;
     player->move       = NONE;
+
+    return player;
 }
 
 void move_snake(snake * player) {

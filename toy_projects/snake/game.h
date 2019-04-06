@@ -28,7 +28,7 @@ void draw_arena(rect arena);
 void draw_snake(snake player);
 void draw_cherry(vec2d goal);
 
-void init_snake(snake * player, int x, int y);
+snake * init_snake(snake * player, rect arena);
 void move_snake(snake * player);
 void grow_snake(snake * player);
 void hit_wall(snake * player, rect arena);
