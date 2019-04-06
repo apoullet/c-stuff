@@ -17,7 +17,7 @@ void draw_arena(rect arena) {
 
 void draw_snake(snake player) {
     for (int i = 0; i < player.limb_count; i++)
-	mvaddch(player.body[i][1], player.body[i][0], LIMB);
+	mvaddch(player.body[i].y, player.body[i].x, LIMB);
 }
 
 void draw_cherry(vec2d goal) {

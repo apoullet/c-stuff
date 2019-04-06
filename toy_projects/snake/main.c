@@ -14,11 +14,18 @@ int main() {
     curs_set(0);
     timeout(100);
 
-    rect arena;
+    int width = 12, height = 4;
 
-    init_rect(&arena, COLS/2, LINES/2, 60, 40);
+    rect arena = { .pos.x = (COLS-width)/2, .pos.y = (LINES-height)/2, .width = width, .height = height };
 
-    snake * player = init_snake(player, arena);
+    int space = arena.width*arena.height - 2*(arena.width+arena.height);
+
+    vec2d body[space];
+
+    body[0].x = arena.pos.x+arena.width/2;
+    body[0].y = arena.pos.y+arena.height/2;
+
+    snake player = { .limb_count = 1, .move = NONE, .body = body };
 
     vec2d goal;
 
@@ -31,12 +38,12 @@ int main() {
 
 	draw_arena(arena);
 	mvprintw(arena.pos.y+2, arena.pos.x+arena.width+1, "SCORE: %d", score);
-	move_snake(player);
-	draw_snake(*player);
-	hit_wall(player, arena);
+	move_snake(&player);
+	draw_snake(player);
+	hit_wall(&player, arena);
 	
-	if (player->body[player->limb_count-1][1] == goal.y && player->body[player->limb_count-1][0] == goal.x) {
-	    grow_snake(player);
+	if (player.body[player.limb_count-1].y == goal.y && player.body[player.limb_count-1].x == goal.x) {
+	    player.growing = 1;
 	    move_cherry(&goal, arena);
 	    score++;
 	}
@@ -48,19 +55,19 @@ int main() {
 
 	switch (ch) {
 	    case KEY_UP:
-		player->move = UP;
+		player.move = UP;
 		break;
 	    case KEY_RIGHT:
-		player->move = RIGHT;
+		player.move = RIGHT;
 		break;
 	    case KEY_DOWN:
-		player->move = DOWN;
+		player.move = DOWN;
 		break;
 	    case KEY_LEFT:
-		player->move = LEFT;
+		player.move = LEFT;
 		break;
 	}
-    } while (ch != 'q' && player->limb_count < 600 && !collision(*player));
+    } while (ch != 'q' && player.limb_count < space && !collision(player));
 
     endwin();
 
