@@ -5,14 +5,14 @@
 #define CHERRY '$'
 #define WALL '#'
 
-void draw_arena(vec2d arena) {
-    mvhline(0, 0, WALL, arena.x);
+void draw_arena(rect arena) {
+    mvhline(arena.pos.y, arena.pos.x, WALL, arena.width);
 
-    mvhline(arena.y-1, 0, WALL, arena.x);
+    mvhline(arena.pos.y+arena.height-1, arena.pos.x, WALL, arena.width);
 
-    mvvline(0, 0, WALL, arena.y);
+    mvvline(arena.pos.y, arena.pos.x, WALL, arena.height);
 
-    mvvline(0, arena.x-1, WALL, arena.y);
+    mvvline(arena.pos.y, arena.pos.x+arena.width-1, WALL, arena.height);
 }
 
 void draw_snake(snake player) {

@@ -14,14 +14,13 @@ int main() {
     curs_set(0);
     timeout(100);
 
-    vec2d arena;
+    rect arena;
 
-    arena.x = 30;
-    arena.y = 20;
+    init_rect(&arena, COLS/2, LINES/2, 60, 40);
 
     snake player;
 
-    init_snake(&player, arena.x/2, arena.y/2);
+    init_snake(&player, arena.pos.x+arena.width/2, arena.pos.y+arena.height/2);
 
     vec2d goal;
 
@@ -33,7 +32,7 @@ int main() {
 	clear();
 
 	draw_arena(arena);
-	mvprintw(2, arena.x+1, "SCORE: %d", score);
+	mvprintw(arena.pos.y+2, arena.pos.x+arena.width+1, "SCORE: %d", score);
 	move_snake(&player);
 	draw_snake(player);
 	hit_wall(&player, arena);

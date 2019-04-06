@@ -58,18 +58,16 @@ void grow_snake(snake * player) {
     player->growing = 1;
 }
 
-void hit_wall(snake * player, vec2d arena) {
-    int width = arena.x, height = arena.y;
-
+void hit_wall(snake * player, rect arena) {
     for (int i = 0; i < player->limb_count; i++) {
-	if (player->body[i][0] < 1)
-	    player->body[i][0] = width-2;
-	if (player->body[i][0] > width-2)
-	    player->body[i][0] = 1;
-	if (player->body[i][1] < 1)
-	    player->body[i][1] = height-2;
-	if (player->body[i][1] > height-2)
-	    player->body[i][1] = 1;
+	if (player->body[i][0] < arena.pos.x+1)
+	    player->body[i][0] = arena.pos.x+arena.width-2;
+	if (player->body[i][0] > arena.pos.x+arena.width-2)
+	    player->body[i][0] = arena.pos.x+1;
+	if (player->body[i][1] < arena.pos.y+1)
+	    player->body[i][1] = arena.pos.y+arena.height-2;
+	if (player->body[i][1] > arena.pos.y+arena.height-2)
+	    player->body[i][1] = arena.pos.y+1;
     }
 }
 
@@ -82,9 +80,16 @@ int collision(snake player) {
     return 0;
 }
 
-void move_cherry(vec2d * goal, vec2d arena) {
+void move_cherry(vec2d * goal, rect arena) {
     srand(time(NULL));
 
-    goal->x = 1 + rand() % (arena.x-2);
-    goal->y = 1 + rand() % (arena.y-2);
+    goal->x = arena.pos.x+1 + rand() % (arena.width-2);
+    goal->y = arena.pos.y+1 + rand() % (arena.height-2);
+}
+
+void init_rect(rect * rectangle, int x, int y, int width, int height) {
+    rectangle->pos.x  = x-width/2;
+    rectangle->pos.y  = y-height/2;
+    rectangle->width  = width;
+    rectangle->height = height;
 }
