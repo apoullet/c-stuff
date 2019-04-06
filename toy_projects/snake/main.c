@@ -14,42 +14,37 @@ int main() {
     curs_set(0);
     timeout(100);
 
-    int arena[2] = { 20, 30 };
+    vec2d arena;
+
+    arena.x = 30;
+    arena.y = 20;
 
     snake player;
 
-    player.body[0][0] = 10; 
-    player.body[0][1] = 15; 
+    init_snake(&player, arena.x/2, arena.y/2);
 
-    player.limb_count = 1;
+    vec2d goal;
 
-    player.growing = 0;
-
-    player.move = NONE;
-
-    cherry goal;
-
-    goal.x = 1 + rand() % 28;
-    goal.y = 1 + rand() % 18;
+    move_cherry(&goal, arena);
 
     int score = 0;
 
     do {
 	clear();
 
-	draw_arena(arena[1], arena[0]);
-	mvprintw(1, 32, "SCORE: %d", score);
+	draw_arena(arena);
+	mvprintw(2, arena.x+1, "SCORE: %d", score);
 	move_snake(&player);
-	draw_snake(&player);
+	draw_snake(player);
 	hit_wall(&player, arena);
 	
-	if (player.body[player.limb_count-1][1] == goal.x && player.body[player.limb_count-1][0] == goal.y) {
+	if (player.body[player.limb_count-1][1] == goal.y && player.body[player.limb_count-1][0] == goal.x) {
 	    grow_snake(&player);
-	    move_cherry(&goal);
+	    move_cherry(&goal, arena);
 	    score++;
 	}
 
-	draw_cherry(&goal);
+	draw_cherry(goal);
 	refresh();
 
 	ch = getch();
@@ -68,7 +63,7 @@ int main() {
 		player.move = LEFT;
 		break;
 	}
-    } while (ch != 'q' && player.limb_count < 600 && !collision(&player));
+    } while (ch != 'q' && player.limb_count < 600 && !collision(player));
 
     endwin();
 
