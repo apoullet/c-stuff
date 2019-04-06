@@ -5,3 +5,6 @@ build: main.c drawing.c calculations.c
 
 clean:
 	rm snake
+
+run: build
+	./snake && rm snake
