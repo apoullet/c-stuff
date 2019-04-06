@@ -7,28 +7,27 @@ void move_snake(snake * player) {
 
     switch (player->move) {
 	case UP:
-	    new_limb.x = player->body[player->limb_count-1].x;    
+	    new_limb   = player->body[player->limb_count-1];    
 	    new_limb.y = player->body[player->limb_count-1].y-1;    
 	    break;
 	
 	case RIGHT:
+	    new_limb   = player->body[player->limb_count-1];    
 	    new_limb.x = player->body[player->limb_count-1].x+1;    
-	    new_limb.y = player->body[player->limb_count-1].y;    
 	    break;
 	
 	case DOWN:
-	    new_limb.x = player->body[player->limb_count-1].x;    
+	    new_limb   = player->body[player->limb_count-1];    
 	    new_limb.y = player->body[player->limb_count-1].y+1;    
 	    break;
 
 	case LEFT:
+	    new_limb   = player->body[player->limb_count-1];    
 	    new_limb.x = player->body[player->limb_count-1].x-1;    
-	    new_limb.y = player->body[player->limb_count-1].y;    
 	    break;
 
 	default:
-	    new_limb.x = player->body[player->limb_count-1].x;    
-	    new_limb.y = player->body[player->limb_count-1].y;    
+	    new_limb = player->body[player->limb_count-1];    
 	    break;
     }
 
@@ -36,14 +35,11 @@ void move_snake(snake * player) {
 	player->growing = 0;
 	player->limb_count++;
     } else {
-	for (int i = 1; i < player->limb_count; i++) {
-	    player->body[i-1].x = player->body[i].x;
-	    player->body[i-1].y = player->body[i].y;
-	}
+	for (int i = 1; i < player->limb_count; i++)
+	    player->body[i-1] = player->body[i];
     }
 
-    player->body[player->limb_count-1].x = new_limb.x;
-    player->body[player->limb_count-1].y = new_limb.y;
+    player->body[player->limb_count-1] = new_limb;
 }
 
 void hit_wall(snake * player, rect arena) {

@@ -14,7 +14,7 @@ int main() {
     curs_set(0);
     timeout(100);
 
-    int width = 12, height = 4;
+    int width = 30, height = 20;
 
     rect arena = { .pos.x = (COLS-width)/2, .pos.y = (LINES-height)/2, .width = width, .height = height };
 
