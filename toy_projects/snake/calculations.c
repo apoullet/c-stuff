@@ -3,31 +3,23 @@
 #include <time.h>
 
 void move_snake(snake * player) {
-    vec2d new_limb;
+    vec2d new_limb = player->body[player->limb_count-1];    
 
     switch (player->move) {
 	case UP:
-	    new_limb   = player->body[player->limb_count-1];    
 	    new_limb.y = player->body[player->limb_count-1].y-1;    
 	    break;
 	
 	case RIGHT:
-	    new_limb   = player->body[player->limb_count-1];    
 	    new_limb.x = player->body[player->limb_count-1].x+1;    
 	    break;
 	
 	case DOWN:
-	    new_limb   = player->body[player->limb_count-1];    
 	    new_limb.y = player->body[player->limb_count-1].y+1;    
 	    break;
 
 	case LEFT:
-	    new_limb   = player->body[player->limb_count-1];    
 	    new_limb.x = player->body[player->limb_count-1].x-1;    
-	    break;
-
-	default:
-	    new_limb = player->body[player->limb_count-1];    
 	    break;
     }
 
