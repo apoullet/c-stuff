@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define PLAYER '^'
 #define WALL '#'
+#define PLAYER '^'
+#define INVADER '@'
 
 int main() {
     int ch;
@@ -23,6 +24,16 @@ int main() {
 
     entity player = { .pos.x = arena.pos.x+arena.width/2, .pos.y = arena.pos.y+arena.height-1, .velocity = 1 };
 
+    entity invaders[arena.width-3];
+
+    invaderRow firstRow = { .invaders = invaders };
+
+    for (int i = 0; i < arena.width-3; i++) {
+	firstRow.invaders[i].pos.x    = arena.pos.x+2+i;
+	firstRow.invaders[i].pos.y    = arena.pos.y+2;
+	firstRow.invaders[i].velocity = 1;
+    }
+
     do {
 	ch = getch();
 
@@ -40,6 +51,9 @@ int main() {
 
 	draw_arena(arena, WALL);
 	draw_entity(player, PLAYER);
+
+	for (int i = 0; i < arena.width-3; i++)
+	    draw_entity(firstRow.invaders[i], INVADER);
     } while (ch != 'q');
 
     endwin();

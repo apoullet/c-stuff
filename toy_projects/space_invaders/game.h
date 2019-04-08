@@ -2,8 +2,7 @@ typedef enum {
     UP,
     RIGHT,
     DOWN,
-    LEFT,
-    NONE
+    LEFT
 } dir;
 
 typedef struct {
@@ -19,6 +18,10 @@ typedef struct {
     vec2d pos;
     float velocity;
 } entity;
+
+typedef struct {
+    entity * invaders;
+} invaderRow;
 
 void move_entity(entity * e, rect arena, dir direction);
 
