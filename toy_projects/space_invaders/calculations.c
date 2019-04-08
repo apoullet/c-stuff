@@ -35,16 +35,18 @@ void shoot(entity * bullets, int * bulletCount, entity player) {
     bullets[(*bulletCount)++] = bullet;
 }
 
-void bullet_hit_invader(entity * bullets, int * bulletCount, entity * invaders, const int INVADERCOUNT) {
+void bullet_hit_invader(entity * bullets, int * bulletCount, const int INVADERCOUNT, int waves, entity invaders[][INVADERCOUNT]) {
     for (int i = 0; i < *bulletCount; i++) {
-	for (int j = 0; j < INVADERCOUNT; j++) {
-	    if (invaders[j].alive && bullets[i].pos.x == invaders[j].pos.x && bullets[i].pos.y == invaders[j].pos.y) {
-		for (int k = i+1; k < *bulletCount; k++)
-		    bullets[k-1] = bullets[k];
+	for (int j = 0; j < waves; j++) {
+	    for (int k = 0; k < INVADERCOUNT; k++) {
+		if (invaders[j][k].alive && bullets[i].pos.x == invaders[j][k].pos.x && bullets[i].pos.y == invaders[j][k].pos.y) {
+		    for (int l = i+1; l < *bulletCount; l++)
+			bullets[k-l] = bullets[l];
 
-		(*bulletCount)--;
+		    (*bulletCount)--;
 
-		invaders[j].alive = 0;
+		    invaders[j][k].alive = 0;
+		}
 	    }
 	}
     }
@@ -61,9 +63,12 @@ void bullet_hit_wall(entity * bullets, int * bulletCount, rect arena) {
     }
 }
 
-void wave_cleared(entity * invaders, const int INVADERCOUNT, int * cleared) {
-    for (int i = 0; i < INVADERCOUNT; i++)
-	if (invaders[i].alive) return;
+void wave_cleared(const int INVADERCOUNT, int waves, entity invaders[][INVADERCOUNT], int * cleared) {
+    for (int i = 0; i < waves; i++) {
+	for (int j = 0; j < INVADERCOUNT; j++) {
+	    if (invaders[i][j].alive) return;
+	}
+    }
 
     (*cleared)++;
 }
