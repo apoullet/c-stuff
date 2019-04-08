@@ -34,8 +34,22 @@ int main() {
 	firstRow.invaders[i].velocity = 1;
     }
 
+    dir invaderDirection = LEFT;
+
     do {
 	ch = getch();
+	
+	if (firstRow.invaders[0].pos.x == arena.pos.x+1 && invaderDirection == LEFT)
+	    invaderDirection = DOWN;
+	else if (firstRow.invaders[0].pos.x == arena.pos.x+1 && invaderDirection == DOWN)
+	    invaderDirection = RIGHT;
+	else if (firstRow.invaders[arena.width-4].pos.x == arena.pos.x+arena.width-1 && invaderDirection == RIGHT)
+	    invaderDirection = DOWN;
+	else if (firstRow.invaders[arena.width-4].pos.x == arena.pos.x+arena.width-1 && invaderDirection == DOWN)
+	    invaderDirection = LEFT;
+
+	for (int i = 0; i < arena.width-3; i++)
+	    move_entity(&firstRow.invaders[i], arena, invaderDirection);
 
 	switch(ch) {
 	    case KEY_LEFT:
