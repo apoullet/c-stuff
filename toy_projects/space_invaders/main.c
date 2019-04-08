@@ -17,7 +17,9 @@ int main() {
     curs_set(0);
     timeout(100);
 
-    rect arena = { .pos.x = 0, .pos.y = 0, .width = 30, .height = 20 };
+    int width = 30, height = 20;
+
+    rect arena = { .pos.x = (COLS-width)/2, .pos.y = (LINES-height)/2, .width = width, .height = height };
 
     entity player = { .pos.x = arena.pos.x+arena.width/2, .pos.y = arena.pos.y+arena.height-1, .velocity = 1 };
 
