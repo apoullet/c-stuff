@@ -26,6 +26,18 @@ int main() {
     do {
 	ch = getch();
 
+	switch(ch) {
+	    case KEY_LEFT:
+		move_entity(&player, arena, LEFT);
+		break;
+
+	    case KEY_RIGHT:
+		move_entity(&player, arena, RIGHT);
+		break;
+	}
+
+	clear();
+
 	draw_arena(arena, WALL);
 	draw_entity(player, PLAYER);
     } while (ch != 'q');

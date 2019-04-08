@@ -1,3 +1,11 @@
+typedef enum {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT,
+    NONE
+} dir;
+
 typedef struct {
     float x, y;
 } vec2d;
@@ -11,6 +19,8 @@ typedef struct {
     vec2d pos;
     float velocity;
 } entity;
+
+void move_entity(entity * e, rect arena, dir direction);
 
 void draw_arena(rect arena, unsigned char appearance);
 void draw_entity(entity e, unsigned char appearance);
