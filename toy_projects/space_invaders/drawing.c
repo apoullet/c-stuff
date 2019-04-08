@@ -9,5 +9,8 @@ void draw_arena(rect arena, unsigned char appearance) {
 }
 
 void draw_entity(entity e, unsigned char appearance) {
-    mvaddch(e.pos.y, e.pos.x, appearance);
+    if (e.alive)
+	mvaddch(e.pos.y, e.pos.x, appearance);
+    else
+	mvaddch(e.pos.y, e.pos.x, ' ');
 }
